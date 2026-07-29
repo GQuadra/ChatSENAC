@@ -37,7 +37,9 @@ class Login extends StatelessWidget {
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
+              suffixIcon: Icon(Icons.visibility_off),
             ),
+            obscureText: true,
           ),
           SizedBox(height: 16),
           InkWell(
