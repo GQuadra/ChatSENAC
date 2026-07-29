@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Tipografia {
+  Tipografia._();
+
   static TextStyle h1 = TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.bold,
