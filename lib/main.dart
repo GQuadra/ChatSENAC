@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:primeiro_app/paginas/cadastro.dart';
 import 'package:primeiro_app/paginas/login.dart';
 
 void main() {
