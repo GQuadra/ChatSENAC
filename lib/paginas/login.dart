@@ -4,6 +4,8 @@ import 'package:primeiro_app/paginas/dashboard.dart';
 import 'package:primeiro_app/utilitarios/tipografia.dart';
 
 class Login extends StatefulWidget {
+  const Login({super.key});
+
   @override
   State<Login> createState() => _LoginState();
 }
