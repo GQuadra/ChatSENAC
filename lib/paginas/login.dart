@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:primeiro_app/paginas/cadastro.dart';
 import 'package:primeiro_app/paginas/dashboard.dart';
 import 'package:primeiro_app/utilitarios/tipografia.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -14,12 +17,23 @@ class _LoginState extends State<Login> {
   final emailControlador = TextEditingController();
   final senhaControlador = TextEditingController();
 
-  void fazerLogin() {
-    if (emailControlador.text != "teste@email.com" ||
-        senhaControlador.text != "123456") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Email e/ou senhas estão incorretos!")),
-      );
+  Future<void> fazerLogin() async {
+    var url = Uri.http("10.112.4.33", "login");
+    var resposta = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        'email': emailControlador.text,
+        'senha': senhaControlador.text,
+      }),
+    );
+
+    if (resposta.statusCode != 200) {
+      var dados = jsonDecode(resposta.body);
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("${dados["message"]}")));
       return;
     }
 
