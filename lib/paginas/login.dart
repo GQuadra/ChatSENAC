@@ -16,9 +16,16 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   final emailControlador = TextEditingController();
   final senhaControlador = TextEditingController();
+  late bool estaEscondido = true;
+
+  void manipulaEscondido() {
+    setState(() {
+      estaEscondido = !estaEscondido;
+    });
+  }
 
   Future<void> fazerLogin() async {
-    var url = Uri.http("10.112.4.33", "login");
+    var url = Uri.http("10.112.4.33", "api/login");
     var resposta = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
@@ -37,7 +44,10 @@ class _LoginState extends State<Login> {
       return;
     }
 
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (build) => Dashboard()));
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (build) => Dashboard()),
+    );
   }
 
   @override
@@ -81,9 +91,16 @@ class _LoginState extends State<Login> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    suffixIcon: Icon(Icons.visibility_off),
+                    suffixIcon: IconButton(
+                      onPressed: manipulaEscondido,
+                      icon: Icon(
+                        estaEscondido
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                      ),
+                    ),
                   ),
-                  obscureText: true,
+                  obscureText: estaEscondido,
                 ),
                 SizedBox(height: 16),
                 InkWell(
