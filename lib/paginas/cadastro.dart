@@ -1,8 +1,54 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import '../utilitarios/tipografia.dart';
 
-class Cadastro extends StatelessWidget {
+class Cadastro extends StatefulWidget {
   const Cadastro({super.key});
+
+  @override
+  State<Cadastro> createState() => _CadastroState();
+}
+
+class _CadastroState extends State<Cadastro> {
+  final nomeControlador = TextEditingController();
+  final emailControlador = TextEditingController();
+  final senhaControlador = TextEditingController();
+  final confirmarSenhaControlador = TextEditingController();
+
+  Future<void> fazerCadastro() async {
+    if (senhaControlador.text != confirmarSenhaControlador.text) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("As senhas não são iguais")));
+      return;
+    }
+
+    var url = Uri.http("10.112.4.33", "api/cadastro");
+    var resposta = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        'nome': nomeControlador.text,
+        'email': emailControlador.text,
+        'senha': senhaControlador.text,
+      }),
+    );
+
+    if(!mounted) return;
+
+    if (resposta.statusCode != 201) {
+      var dados = jsonDecode(resposta.body);
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("${dados["message"]}")));
+      return;
+    }
+
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
