@@ -25,7 +25,7 @@ class _CadastroState extends State<Cadastro> {
       return;
     }
 
-    var url = Uri.http("10.112.4.33", "api/cadastro");
+    var url = Uri.http(String.fromEnvironment("API_URL"), "api/cadastro");
     var resposta = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
