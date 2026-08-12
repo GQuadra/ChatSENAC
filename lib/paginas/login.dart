@@ -37,18 +37,20 @@ class _LoginState extends State<Login> {
 
     if (!mounted) return;
 
-    if (resposta.statusCode != 200) {
-      var dados = jsonDecode(resposta.body);
+    var dados = jsonDecode(resposta.body);
 
+    if (resposta.statusCode != 200) {
       ScaffoldMessenger.of(
         context,
       ).showSnackBar(SnackBar(content: Text("${dados["message"]}")));
       return;
     }
 
+    String nomeUsuario = dados["nomeUsuario"];
+
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (build) => Dashboard()),
+      MaterialPageRoute(builder: (build) => Dashboard(nomeUsuario: nomeUsuario)),
     );
   }
 
