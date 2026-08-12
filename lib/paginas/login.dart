@@ -35,6 +35,8 @@ class _LoginState extends State<Login> {
       }),
     );
 
+    if (!mounted) return;
+
     if (resposta.statusCode != 200) {
       var dados = jsonDecode(resposta.body);
 
