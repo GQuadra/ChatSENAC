@@ -25,6 +25,6 @@ class Tipografia {
     fontFamily: "Inter",
     height: 1.4,
     letterSpacing: 12 * -0.01,
-    color: Colors.blue
+    color: Colors.blue,
   );
 }

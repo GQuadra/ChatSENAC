@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import '../utilitarios/tipografia.dart';
 
 class Cadastro extends StatefulWidget {
@@ -25,7 +26,8 @@ class _CadastroState extends State<Cadastro> {
       return;
     }
 
-    var url = Uri.http(String.fromEnvironment("API_URL"), "api/cadastro");
+    const baseUrl = String.fromEnvironment("API_URL");
+    var url = Uri.http(baseUrl, "api/cadastro");
     var resposta = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
@@ -36,7 +38,7 @@ class _CadastroState extends State<Cadastro> {
       }),
     );
 
-    if(!mounted) return;
+    if (!mounted) return;
 
     if (resposta.statusCode != 201) {
       var dados = jsonDecode(resposta.body);

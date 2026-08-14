@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:primeiro_app/paginas/cadastro.dart';
 import 'package:primeiro_app/paginas/dashboard.dart';
 import 'package:primeiro_app/utilitarios/tipografia.dart';
-import 'package:http/http.dart' as http;
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -25,7 +25,8 @@ class _LoginState extends State<Login> {
   }
 
   Future<void> fazerLogin() async {
-    var url = Uri.http(String.fromEnvironment("API_URL"), "api/login");
+    const baseUrl = String.fromEnvironment("API_URL");
+    var url = Uri.http(baseUrl, "api/login");
     var resposta = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
@@ -50,7 +51,9 @@ class _LoginState extends State<Login> {
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (build) => Dashboard(nomeUsuario: nomeUsuario)),
+      MaterialPageRoute(
+        builder: (build) => Dashboard(nomeUsuario: nomeUsuario),
+      ),
     );
   }
 
